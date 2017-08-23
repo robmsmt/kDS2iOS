@@ -1,0 +1,8 @@
+version: "Apple Swift version 4.0 (swiftlang-900.0.59 clang-900.0.34.2)"
+options: "19afc6dc9c9da6296f469470daabd0a2"
+build_time: [1503315254, 11886000]
+inputs:
+  "/Users/rob/Dropbox/UCL/DIS/apple-test/iOS/test-kds-bug/test-kds-bug/test-kds-bug/ViewController.swift": [1503263367, 0]
+  "/Users/rob/Dropbox/UCL/DIS/apple-test/iOS/test-kds-bug/test-kds-bug/test-kds-bug/ext.swift": [1503258001, 0]
+  "/Users/rob/Dropbox/UCL/DIS/apple-test/iOS/test-kds-bug/test-kds-bug/test-kds-bug/AppDelegate.swift": [1502891910, 0]
+  "/Users/rob/Dropbox/UCL/DIS/apple-test/iOS/test-kds-bug/test-kds-bug/Build/Intermediates.noindex/test-kds-bug.build/Debug-iphoneos/test-kds-bug.build/DerivedSources/CoreMLGenerated/kds/kds.swift": [1503315253, 0]
