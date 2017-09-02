@@ -20,7 +20,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate{
     var recordingSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder!
     
-    
     @IBOutlet weak var rec_btn: UIButton!
     @IBOutlet weak var label: UILabel!
     
@@ -70,7 +69,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate{
             print("BIG RECORD FAIL")
         }
     }
-        
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -85,21 +83,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate{
         print(arg)
     }
     
-//    func new_fvec_print(s:UnsafeMutableRawPointer) {
-////        uint_t j;
-//
-//        var j = 0;
-//
-////        for (j=0; s->length; j++) {
-//////        AUBIO_MSG(AUBIO_SMPL_FMT " ", s->data[j]);
-////            print(s->data[j])
-////        }
-//
-//
-//
-//        
-//    }
-    
     @IBAction func beta_run_trans_for_rec(_ sender: Any) {
         
             let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first
@@ -107,11 +90,11 @@ class ViewController: UIViewController, AVAudioRecorderDelegate{
             print(path as Any)
             
             if (path != nil) {
-                let hop_size : uint_t = 400
+                let win_s:uint_t = 512
+                let hop_size : uint_t = uint_t(win_s / 4)
+                
                 let a = new_fvec(hop_size)
                 let src = new_aubio_source(path?.path, 0, hop_size)
-                
-                let win_s:uint_t = 1600
                 let n_filters:uint_t = 26
                 let n_coefs:uint_t = 26
                 let samplerate:uint_t = 16000
@@ -138,18 +121,11 @@ class ViewController: UIViewController, AVAudioRecorderDelegate{
                         }
                     }
                     
-//                    if let data = fvec_get_data(oout) {
-//                        let buffer = UnsafeBufferPointer(start: data, count: Int(n_coefs))
-//                        dataStore.append(contentsOf: buffer)
-//                    }
-//                    fvec_print(oout)
-                    
                     dataStore.append(row)
                     row.removeAll()
                     total_frames += read
                     if (read < hop_size) { break }
                 }
-                
                 
                 print("read", total_frames, "frames at", aubio_source_get_samplerate(src), "Hz")
                 print(dataStore)
@@ -162,7 +138,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate{
             } else {
                 print("could not find file at \(String(describing: path?.absoluteString))")
             }
-            
         }
 
     func startRecording(){
@@ -186,7 +161,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate{
         } catch {
             finishRecording(success: false)
         }
-        
     }
 
     func finishRecording(success: Bool) {
@@ -209,7 +183,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate{
         }
     }
 
-
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
@@ -222,18 +195,16 @@ class ViewController: UIViewController, AVAudioRecorderDelegate{
         }
     }
     
-    
 //    ###############################
 
-    
     func ml_run() {
         print("ml_run")
         
         let cpu = MLPredictionOptions()
         cpu.usesCPUOnly = true
         
-        let INPUT_DIMS: NSNumber = 26
-        let TIME_STEPS: NSNumber = 234
+        let INPUT_DIMS: NSNumber = 26 //161
+        let TIME_STEPS: NSNumber = 234 //131
         let BATCH_SIZE: NSNumber = 1 // use 1 for inference
         let IN_SHAPE = [BATCH_SIZE, TIME_STEPS, INPUT_DIMS]
         
@@ -257,7 +228,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate{
             print(err)
         }
         
-
         //loop through array of strings and build MLMultiArray
         for (r_ind,rows) in (arrayOfStrings0?.enumerated())! {
             for (c_ind,cols) in (rows.components(separatedBy: ",").enumerated()){
@@ -290,8 +260,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate{
             fatalError("Unexpected runtime error.")
         }
         
-//        // uncomment these 3 lines to ensure that GPU is used on device. Note this currently breaks with DS1
-//        // see: https://forums.developer.apple.com/thread/84966
+        // uncomment these 3 lines to ensure that GPU is used on device. Note this currently breaks with DS1
+        // see: https://forums.developer.apple.com/thread/84966
 //        guard let kdsOutput = try? model.prediction(input: c) else {
 //            fatalError("Unexpected runtime error.")
 //        }

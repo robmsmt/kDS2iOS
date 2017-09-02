@@ -2,4 +2,22 @@
 <Bucket
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../../../../Library/Developer/Xcode-beta/DerivedData/kDS2iOS-eckfvxbidycpacccnkkcqrojjzhq/Build/Intermediates.noindex/kDS2iOS.build/Debug-iphonesimulator/kDS2iOS.build/DerivedSources/CoreMLGenerated/kds/kds.swift"
+            timestampString = "525396148.332812"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
+            landmarkName = "prediction(input1:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

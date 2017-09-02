@@ -17,6 +17,15 @@ extension kds{
     func optpredict(from input: kdsInput, options: MLPredictionOptions) throws -> kdsOutput {
         let outFeatures = try model.prediction(from: input, options: options)
         let result = kdsOutput(output1: outFeatures.featureValue(for: "output1")!.multiArrayValue!)
+        
+        //1. FAIL built in birnn fails (see apple post)
+        // let result = kdsOutput(output1: outFeatures.featureValue(for: "output1")!.multiArrayValue!, bidirectional_1_h_out: outFeatures.featureValue(for: "bidirectional_1_h_out")!.multiArrayValue!, bidirectional_1_c_out: outFeatures.featureValue(for: "bidirectional_1_c_out")!.multiArrayValue!, bidirectional_1_h_out_rev: outFeatures.featureValue(for: "bidirectional_1_h_out_rev")!.multiArrayValue!, bidirectional_1_c_out_rev: outFeatures.featureValue(for: "bidirectional_1_c_out_rev")!.multiArrayValue!)
+        
+        //2. FAIL using GRU "own birnn" fails [coreml] Different batch numbers for input features. [coreml] Failure in resetSizes.
+        //FAIL just 2 GRU RNN stacked
+        //FAIL 1 GRU RNN with FC front and back.
+        //FAIL 1 SimpleRNN with FC front and back
+        
         return result
     }
 }
@@ -85,7 +94,7 @@ func argMaxDecode(t: [Double]) -> String {
         }
     }
     
-    // this is a POC - hacky but quick
+    // hacky but quick
     // map biggest value position to a letter
     switch max_pos {
     case 0:
