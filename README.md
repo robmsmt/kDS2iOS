@@ -1,6 +1,7 @@
 # kDS2iOS
 
-This is a Speech Recognition iOS App that makes use of the CoreML model created in Keras from ![github.com/mlrobsmt/KerasDeepSpeech](github.com/mlrobsmt/KerasDeepSpeech)
+
+This is a Speech Recognition iOS App that makes use of the CoreML model created in Keras from ![github.com/mlrobsmt/KerasDeepSpeech](https://github.com/mlrobsmt/KerasDeepSpeech)
 
 
 ## Example Image
